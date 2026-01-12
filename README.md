@@ -1,6 +1,6 @@
 # 🧠 Machine Learning Algorithms From Scratch
 
-> **A Python implementation of core Machine Learning algorithms using only `NumPy`.**
+> **A Python implementation of core Machine Learning algorithms.**
 > This repository aims to demystify the "Black Box" of ML libraries by implementing the underlying mathematics from the ground up.
 
 ## 📚 Overview
