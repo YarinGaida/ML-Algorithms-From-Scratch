@@ -6,7 +6,7 @@
 ## 📚 Overview
 The goal of this project is to implement fundamental ML algorithms without relying on high-level frameworks like `scikit-learn`. Each implementation is structured as a Python Class and focuses on vectorization, linear algebra, and statistical intuition.
 
-This is an educational project designed to demonstrate a deep understanding of the mathematical foundations of Data Science.
+This is an educational project.
 
 ---
 
