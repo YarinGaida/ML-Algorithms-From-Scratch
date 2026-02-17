@@ -1,12 +1,12 @@
 # 🧠 Machine Learning Algorithms From Scratch
 
-> **A Python implementation of core Machine Learning algorithms using only `NumPy`.**
+> **A Python implementation of core Machine Learning algorithms.**
 > This repository aims to demystify the "Black Box" of ML libraries by implementing the underlying mathematics from the ground up.
 
 ## 📚 Overview
 The goal of this project is to implement fundamental ML algorithms without relying on high-level frameworks like `scikit-learn`. Each implementation is structured as a Python Class and focuses on vectorization, linear algebra, and statistical intuition.
 
-This is an educational project designed to demonstrate a deep understanding of the mathematical foundations of Data Science.
+This is an educational project.
 
 ---
 
