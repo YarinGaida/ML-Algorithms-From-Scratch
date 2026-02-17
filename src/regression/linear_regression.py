@@ -1,75 +1,75 @@
 import numpy as np
+import copy
+import math
 
-class LinearRegression:
-    """
-    Implementation of Linear Regression using the Normal Equation (Closed Form Solution).
-    Based on the formula: beta = (X^T * X)^-1 * X^T * Y
-    """
+class MultipleLinearRegression:
     def __init__(self):
-        self.beta = None
-
-    def fit(self, X, y):
-        """
-        Calculates the optimal beta coefficients using the Normal Equation.
-        """
-        # Adding bias term (intercept) is usually handled here, 
-        # but per your assignment strict rules, we assume X is passed correctly.
-        
-        # Formula: (X^T * X)^-1 * X^T * Y
-        # We use pinv (pseudo-inverse) for better stability, but inv is fine too per formula.
-        self.beta = np.linalg.inv(X.T @ X) @ X.T @ y
+        self.w = None
+        self.b = None
 
     def predict(self, X):
         """
-        Predicts target values for given input X using the learned beta.
+        Single prediction or batch prediction using linear regression.
+        Args:
+          X (ndarray (m,n)): Data, m examples with n features
+        Returns:
+          p (ndarray (m,)): Predictions
         """
-        if self.beta is None:
-            raise Exception("Model has not been fitted yet.")
-        return X @ self.beta
+        return np.dot(X, self.w) + self.b
 
-# --- החלק של ה-Main שמדגים את הפתרון לשיעורי הבית ---
-if __name__ == "__main__":
-    # 1. Configuration
-    n_samples = 1000
-    m_features = 2
-    
-    # 2. Generate random uniform matrix X in [0,1]
-    X = np.random.rand(n_samples, m_features)
-    
-    # 3. Define true Beta parameters (Hardcoded for demo, or input)
-    # Let's say Beta is [5, 10]
-    true_beta = np.array([[5], [10]]) 
-    
-    print(f"True Beta parameters:\n{true_beta}")
+    def compute_cost(self, X, y, w, b):
+        """
+        Computes the cost (mean squared error).
+        """
+        m = X.shape[0]
+        cost = 0.0
+        for i in range(m):                                
+            f_wb_i = np.dot(X[i], w) + b           
+            cost = cost + (f_wb_i - y[i])**2       
+        cost = cost / (2 * m)                         
+        return cost
 
-    # 4. Generate Gaussian Noise (sigma = 1)
-    sigma = 1.0
-    epsilon = np.random.randn(n_samples, 1) * sigma
-    
-    # 5. Compute Y = X * beta + epsilon
-    # Reshaping is crucial for correct matrix multiplication dimensions
-    y = X @ true_beta + epsilon
+    def compute_gradient(self, X, y, w, b):
+        """
+        Computes the gradient for linear regression.
+        """
+        m, n = X.shape
+        dj_dw = np.zeros((n,))
+        dj_db = 0.
 
-    # --- Using our Class ---
-    model = LinearRegression()
-    model.fit(X, y)
-    estimated_beta = model.beta
+        for i in range(m):                             
+            err = (np.dot(X[i], w) + b) - y[i]   
+            for j in range(n):                         
+                dj_dw[j] = dj_dw[j] + err * X[i, j]    
+            dj_db = dj_db + err                        
+        dj_dw = dj_dw / m                                
+        dj_db = dj_db / m                                
+            
+        return dj_db, dj_dw
 
-    print(f"\nEstimated Beta (Normal Equation):\n{estimated_beta}")
-    
-    # 6. Comparison
-    print("\n--- Comparison ---")
-    for i in range(m_features):
-        diff = abs(true_beta[i][0] - estimated_beta[i][0])
-        print(f"Beta[{i}]: True={true_beta[i][0]}, Est={estimated_beta[i][0]:.4f}, Diff={diff:.4f}")
+    def fit(self, X, y, alpha, num_iters):
+        """
+        Performs batch gradient descent to learn w and b.
+        """
+        m, n = X.shape
+        self.w = np.zeros((n,))
+        self.b = 0.
+        J_history = []
+        
+        for i in range(num_iters):
+            # Calculate the gradient
+            dj_db, dj_dw = self.compute_gradient(X, y, self.w, self.b)   
 
-    # 7. Check influence of larger noise (Sigma Increase)
-    print("\n--- Increasing Noise (Sigma = 10) ---")
-    sigma_large = 10.0
-    epsilon_large = np.random.randn(n_samples, 1) * sigma_large
-    y_large = X @ true_beta + epsilon_large
-    
-    model_large = LinearRegression()
-    model_large.fit(X, y_large)
-    
-    print(f"Estimated Beta with High Noise:\n{model_large.beta}")
+            # Update Parameters
+            self.w = self.w - alpha * dj_dw               
+            self.b = self.b - alpha * dj_db               
+          
+            # Save cost J at each iteration
+            if i < 100000:      
+                J_history.append(self.compute_cost(X, y, self.w, self.b))
+
+            # Print progress
+            if i % math.ceil(num_iters / 10) == 0:
+                print(f"Iteration {i:4d}: Cost {J_history[-1]:8.2f}")
+            
+        return self.w, self.b, J_history
