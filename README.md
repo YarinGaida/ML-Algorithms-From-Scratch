@@ -16,10 +16,10 @@ This repository is currently under active development. Algorithms are added stag
 
 ### 1. Supervised Learning
 #### Regression
-- [] **Linear Regression** (Closed-Form Solution / Normal Equation)
+- [ ] **Linear Regression** (Closed-Form Solution / Normal Equation)
     - Implemented using Matrix multiplication.
     - Includes synthetic data generation and noise simulation.
-- [X] **Linear Regression** (Gradient Descent Optimization) *[Planned]*
+    - [X] **Linear Regression** (Gradient Descent Optimization) *[Planned]*
 
 #### Classification
 - [ ] **Logistic Regression** *[Planned]*
