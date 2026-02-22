@@ -20,7 +20,6 @@ This repository is currently under active development. Algorithms are added stag
     - Implemented using Matrix multiplication.
     - Includes synthetic data generation and noise simulation.
 - [X] **Linear Regression** (Gradient Descent Optimization) *[Planned]*
-- [ ] **Polynomial Regression** *[Planned]*
 
 #### Classification
 - [ ] **Logistic Regression** *[Planned]*
