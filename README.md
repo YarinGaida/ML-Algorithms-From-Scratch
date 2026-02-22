@@ -28,6 +28,7 @@ This repository is currently under active development. Algorithms are added stag
 
 ### 2. Unsupervised Learning
 - [ ] **K-Means Clustering** *[Planned]*
+- [ ] **EM Clustering** *[Planned]*
 - [ ] **PCA (Dimensionality Reduction)** *[Planned]*
 
 ---
