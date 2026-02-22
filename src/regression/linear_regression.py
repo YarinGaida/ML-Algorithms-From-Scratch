@@ -21,7 +21,7 @@ class MultipleLinearRegression:
         """
         Computes the cost (mean squared error).
         """
-        m = X.shape[0]
+        m = X.shape[0] # number of training exampels
         cost = 0.0
         for i in range(m):                                
             f_wb_i = np.dot(X[i], w) + b           
@@ -40,7 +40,7 @@ class MultipleLinearRegression:
         for i in range(m):                             
             err = (np.dot(X[i], w) + b) - y[i]   
             for j in range(n):                         
-                dj_dw[j] = dj_dw[j] + err * X[i, j]    
+                dj_dw[j] = dj_dw[j] + err * X[i, j] 
             dj_db = dj_db + err                        
         dj_dw = dj_dw / m                                
         dj_db = dj_db / m                                
